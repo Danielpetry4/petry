@@ -1,18 +1,50 @@
-<header class="site-header">
-  <nav class="nav-container">
-    <a href="/" class="nav-logo">
-      <span class="nav-logo-icon">&#9733;</span>
-      <span class="nav-logo-text">CreditRepair Guide</span>
-    </a>
-    <div class="nav-links">
-      <a href="/" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">Home</a>
-      <a href="/product" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'product' ? 'active' : '' %>">Get the Guide</a>
-      <a href="/faq" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'faq' ? 'active' : '' %>">FAQ</a>
-      <a href="/support" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'support' ? 'active' : '' %>">Support</a>
-      <a href="/product" class="nav-cta-button">Buy Now</a>
-    </div>
-    <button class="nav-mobile-toggle" aria-label="Toggle navigation menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'DIY Credit Repair Guide' %></title>
+  <meta name="description" content="A practical educational PDF guide that teaches consumers how to review credit reports, dispute possible errors, handle fraud issues, and build better credit habits.">
+  
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/style.css">
+  <% if (typeof isAdmin !== 'undefined' && isAdmin) { %>
+  <link rel="stylesheet" href="/css/admin.css">
+  <% } %>
+  
+  <!-- Stripe JS (product page only) -->
+  <% if (typeof currentPage !== 'undefined' && currentPage === 'product') { %>
+  <script src="https://js.stripe.com/v3/"></script>
+  <% } %>
+</head>
+<body>
+  <!-- AI Chat widget (non-admin pages) -->
+  <% if (typeof isAdmin === 'undefined' || !isAdmin) { %>
+    <%- include('ai-chat') %>
+  <% } %>
+
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="/" class="nav-logo">
+        <span class="nav-logo-icon">&#9733;</span>
+        <span class="nav-logo-text">CreditRepair Guide</span>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">Home</a>
+        <a href="/product" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'product' ? 'active' : '' %>">Get the Guide</a>
+        <a href="/faq" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'faq' ? 'active' : '' %>">FAQ</a>
+        <a href="/support" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'support' ? 'active' : '' %>">Support</a>
+        <a href="/product" class="nav-cta-button">Buy Now</a>
+      </div>
+      <button class="nav-mobile-toggle" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
