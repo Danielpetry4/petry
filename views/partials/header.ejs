@@ -25,11 +25,6 @@
   <% } %>
 </head>
 <body>
-  <!-- AI Chat widget (non-admin pages) -->
-  <% if (typeof isAdmin === 'undefined' || !isAdmin) { %>
-    <%- include('ai-chat') %>
-  <% } %>
-
   <header class="site-header">
     <nav class="nav-container">
       <a href="/" class="nav-logo">
