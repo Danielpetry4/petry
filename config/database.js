@@ -226,7 +226,7 @@ function seedDefaultData() {
       VALUES (?, ?, ?, ?, ?)
     `).run(
       productId,
-      'DIY Credit Repair and Credit Building Guide',
+      'DIY Credit Report &amp; Credit Building Guide',
       'A comprehensive educational PDF guide that teaches you how to review your credit reports, dispute errors, handle fraud, and build better credit habits.',
       2900,
       './data/guide.pdf'

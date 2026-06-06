@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
   const product = db.prepare('SELECT * FROM products WHERE id = ? AND is_active = 1').get('default-product');
   
   res.render('pages/index', {
-    title: 'DIY Credit Repair Guide - Take Control of Your Credit',
-    product: product || { id: 'default-product', name: 'DIY Credit Repair Guide', description: 'A comprehensive educational PDF guide.', price_cents: 2900 },
+    title: 'Better Credit Guide - Take Control of Your Credit',
+    product: product || { id: 'default-product', name: 'DIY Credit Report & Credit Building Guide', description: 'A comprehensive educational PDF guide.', price_cents: 2900 },
     currentPage: 'home'
   });
 });
@@ -25,8 +25,8 @@ router.get('/product', (req, res) => {
   const product = db.prepare('SELECT * FROM products WHERE id = ? AND is_active = 1').get('default-product');
   
   res.render('pages/product', {
-    title: 'DIY Credit Repair Guide - Purchase',
-    product: product || { id: 'default-product', name: 'DIY Credit Repair Guide', description: 'A comprehensive educational PDF guide.', price_cents: 2900 },
+    title: 'Better Credit Guide - Purchase',
+    product: product || { id: 'default-product', name: 'DIY Credit Report & Credit Building Guide', description: 'A comprehensive educational PDF guide.', price_cents: 2900 },
     stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder',
     currentPage: 'product'
   });

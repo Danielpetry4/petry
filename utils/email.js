@@ -87,7 +87,7 @@ async function sendPurchaseConfirmation(customer, order, downloadLink) {
     <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <h1 style="color: #2c3e50;">Thank You for Your Purchase!</h1>
       <p>Hi ${customer.name || 'there'},</p>
-      <p>Thank you for purchasing the <strong>DIY Credit Repair and Credit Building Guide</strong>.</p>
+      <p>Thank you for purchasing the <strong>DIY Credit Report &amp; Credit Building Guide</strong>.</p>
       <p>Your order has been confirmed. You can download your guide using the link below:</p>
       <div style="text-align: center; margin: 30px 0;">
         <a href="${downloadUrl}" style="background-color: #27ae60; color: white; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold;">
@@ -102,7 +102,7 @@ async function sendPurchaseConfirmation(customer, order, downloadLink) {
       </ul>
       <p>If you have any questions, please visit our <a href="${appUrl}/support">Support page</a>.</p>
       <p style="color: #7f8c8d; font-size: 12px; margin-top: 40px;">
-        This is an automated message from DIY Credit Repair Guide. Please do not reply directly.
+        This is an automated message from Better Credit Guide. Please do not reply directly.
       </p>
     </body>
     </html>
@@ -110,7 +110,7 @@ async function sendPurchaseConfirmation(customer, order, downloadLink) {
 
   return sendEmail({
     to: customer.email,
-    subject: 'Your DIY Credit Repair Guide - Download Link',
+    subject: 'Your DIY Credit Report Guide - Download Link',
     html,
     template: 'purchase-confirmation'
   });
@@ -133,7 +133,7 @@ async function sendDownloadLinkRenewal(customer, downloadLink) {
     <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <h2 style="color: #2c3e50;">Your Download Link Has Been Renewed</h2>
       <p>Hi ${customer.name || 'there'},</p>
-      <p>Your download link for the <strong>DIY Credit Repair and Credit Building Guide</strong> has been renewed.</p>
+      <p>Your download link for the <strong>DIY Credit Report &amp; Credit Building Guide</strong> has been renewed.</p>
       <div style="text-align: center; margin: 30px 0;">
         <a href="${downloadUrl}" style="background-color: #27ae60; color: white; padding: 14px 28px; text-decoration: none; border-radius: 5px;">
           Download Your Guide
@@ -143,7 +143,7 @@ async function sendDownloadLinkRenewal(customer, downloadLink) {
         <li>New expiry: ${expiresDate}</li>
         <li>Maximum downloads: ${downloadLink.max_downloads}</li>
       </ul>
-      <p style="color: #7f8c8d; font-size: 12px; margin-top: 40px;">This is an automated message from DIY Credit Repair Guide.</p>
+      <p style="color: #7f8c8d; font-size: 12px; margin-top: 40px;">This is an automated message from Better Credit Guide.</p>
     </body>
     </html>
   `;
@@ -173,7 +173,7 @@ async function sendSupportConfirmation(name, email, ticketId) {
         <li><strong>Status:</strong> Open</li>
       </ul>
       <p>We'll get back to you as soon as possible.</p>
-      <p style="color: #7f8c8d; font-size: 12px; margin-top: 40px;">This is an automated message from DIY Credit Repair Guide.</p>
+      <p style="color: #7f8c8d; font-size: 12px; margin-top: 40px;">This is an automated message from Better Credit Guide.</p>
     </body>
     </html>
   `;

@@ -61,7 +61,7 @@ const AI_RESPONSES = {
     "For fraud situations, acting quickly is important. Place a fraud alert on your credit reports and review them carefully. Our guide provides a detailed action plan for handling fraud."
   ],
   'default': [
-    "That's a great question! Our DIY Credit Repair Guide covers this topic and many others in detail. The guide provides practical, step-by-step instructions for understanding and managing your credit. You can purchase it from our product page.",
+    "That's a great question! Our DIY Credit Report &amp; Credit Building Guide covers this topic and many others in detail. The guide provides practical, step-by-step instructions for understanding and managing your credit. You can purchase it from our product page.",
     "I'd be happy to help you understand this topic better. Our educational guide provides comprehensive information on credit management, reporting, and building healthy financial habits."
   ]
 };
