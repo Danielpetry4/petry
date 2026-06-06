@@ -1,0 +1,62 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Orders</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <% if (locals.alert) { %>
+      <div class="alert alert-<%= alert.type || 'info' %>"><%= alert.message %></div>
+    <% } %>
+
+    <p style="color: var(--gray-500); margin-bottom: var(--space-4);"><%= pagination ? pagination.total : 0 %> total orders</p>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Order ID</th><th>Customer</th><th>Email</th><th>Amount</th>
+            <th>Status</th><th>Refund</th><th>Date</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (locals.orders && orders.length > 0) { %>
+            <% orders.forEach(function(order) { %>
+              <tr>
+                <td style="font-family: var(--font-mono); font-size: 0.8125rem;">
+                  <a href="/admin/orders/<%= order.id %>"><%= order.id.substring(0, 8) %>…</a>
+                </td>
+                <td><%= order.customer_name || 'N/A' %></td>
+                <td><%= order.customer_email || 'N/A' %></td>
+                <td>$<%= (order.amount_cents / 100).toFixed(2) %></td>
+                <td><span class="status-badge <%= order.status %>"><%= order.status %></span></td>
+                <td>
+                  <% if (order.refund_status) { %>
+                    <span class="status-badge refunded"><%= order.refund_status %></span>
+                  <% } else { %>
+                    <span style="color: var(--gray-400);">—</span>
+                  <% } %>
+                </td>
+                <td style="font-size: 0.8125rem; color: var(--gray-500);"><%= new Date(order.created_at).toLocaleDateString() %></td>
+                <td>
+                  <a href="/admin/orders/<%= order.id %>" class="button button-small">View</a>
+                </td>
+              </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="8" style="text-align: center; padding: var(--space-8); color: var(--gray-400);">No orders found</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if (locals.pagination && pagination.pages > 1) { %>
+      <div class="pagination">
+        <% for (let p = 1; p <= pagination.pages; p++) { %>
+          <a href="?page=<%= p %><%= statusFilter ? '&status=' + statusFilter : '' %>"
+             class="<%= p === pagination.page ? 'active' : '' %>"><%= p %></a>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</main>

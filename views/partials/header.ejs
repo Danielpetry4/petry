@@ -1,0 +1,18 @@
+<header class="site-header">
+  <nav class="nav-container">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-icon">&#9733;</span>
+      <span class="nav-logo-text">CreditRepair Guide</span>
+    </a>
+    <div class="nav-links">
+      <a href="/" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">Home</a>
+      <a href="/product" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'product' ? 'active' : '' %>">Get the Guide</a>
+      <a href="/faq" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'faq' ? 'active' : '' %>">FAQ</a>
+      <a href="/support" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'support' ? 'active' : '' %>">Support</a>
+      <a href="/product" class="nav-cta-button">Buy Now</a>
+    </div>
+    <button class="nav-mobile-toggle" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>

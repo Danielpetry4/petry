@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+<section class="page-content download-error-page">
+  <div class="container">
+    <div class="error-icon">&#9940;</div>
+    <h1><%= typeof title !== 'undefined' ? title : 'Download Error' %></h1>
+    <p class="error-message"><%= typeof error !== 'undefined' ? error : 'An error occurred.' %></p>
+
+    <% if (typeof errorCode !== 'undefined') { %>
+      <p class="error-code">Error code: <%= errorCode %></p>
+    <% } %>
+
+    <div class="error-actions">
+      <a href="/support" class="button button-primary">Contact Support</a>
+      <a href="/" class="button button-secondary">Go to Homepage</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

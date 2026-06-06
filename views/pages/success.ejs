@@ -1,0 +1,45 @@
+<%- include('../partials/header') %>
+
+<section class="success-page">
+  <div class="container-narrow">
+    <div class="success-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    </div>
+
+    <h1>Thank You for Your Purchase!</h1>
+    <p class="subtitle">Your order has been processed successfully. Your guide is ready to download.</p>
+
+    <% if (locals.downloadUrl) { %>
+    <div class="download-card">
+      <a href="<%= downloadUrl %>" class="btn btn-accent btn-lg btn-block">Download Your Guide Now (PDF)</a>
+      <p class="note">This download link will expire in 7 days. Please save the file to your device.</p>
+    </div>
+    <% } else if (locals.downloadToken) { %>
+    <div class="download-card">
+      <a href="/download/<%= downloadToken %>" class="btn btn-accent btn-lg btn-block">Download Your Guide Now (PDF)</a>
+      <p class="note">This download link will expire in 7 days. Please save the file to your device.</p>
+    </div>
+    <% } else { %>
+    <div class="download-card">
+      <p>Your download link has been sent to your email. If you don't see it within a few minutes, please check your spam folder.</p>
+      <a href="/support" class="btn btn-outline btn-sm">Contact Support</a>
+    </div>
+    <% } %>
+
+    <div style="margin-top: var(--space-10); text-align: left;">
+      <div class="disclaimer-banner" role="alert">
+        <svg class="disclaimer-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div>
+          <strong>Reminder:</strong> This is an educational resource. Results vary and are not guaranteed. We do not provide credit repair services. Use this guide as a learning tool.
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: var(--space-8);">
+      <a href="/" class="btn btn-ghost">← Back to Home</a>
+    </p>
+  </div>
+</section>

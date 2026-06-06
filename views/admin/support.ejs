@@ -1,0 +1,39 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Support Tickets</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <div class="filter-bar">
+      <a href="/admin/support" class="button button-small <%= statusFilter === 'all' ? 'active' : '' %>">All</a>
+      <a href="/admin/support?status=open" class="button button-small <%= statusFilter === 'open' ? 'active' : '' %>">Open</a>
+      <a href="/admin/support?status=resolved" class="button button-small <%= statusFilter === 'resolved' ? 'active' : '' %>">Resolved</a>
+    </div>
+    <table class="admin-table">
+      <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Priority</th><th>Date</th><th>Actions</th></tr></thead>
+      <tbody>
+        <% tickets.forEach(function(t) { %>
+        <tr>
+          <td><%= t.id.substring(0, 8) %>...</td>
+          <td><%= t.name || '-' %></td>
+          <td><%= t.email %></td>
+          <td><%= t.subject %></td>
+          <td><span class="status-badge status-<%= t.status %>"><%= t.status %></span></td>
+          <td><%= t.priority %></td>
+          <td><%= new Date(t.created_at).toLocaleDateString() %></td>
+          <td>
+            <% if (t.status === 'open') { %>
+            <form method="POST" action="/admin/support/<%= t.id %>/close" style="display:inline">
+              <input type="hidden" name="notes" value="Closed by admin">
+              <button type="submit" class="button button-small">Close</button>
+            </form>
+            <% } else { %>Resolved<% } %>
+          </td>
+        </tr>
+        <% }); %>
+        <% if (tickets.length === 0) { %><tr><td colspan="8" class="empty-state">No tickets found</td></tr><% } %>
+      </tbody>
+    </table>
+  </div>
+</main>

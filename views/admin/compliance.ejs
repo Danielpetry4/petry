@@ -1,0 +1,59 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Compliance Logs</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <% if (locals.alert) { %>
+      <div class="alert alert-<%= alert.type || 'info' %>"><%= alert.message %></div>
+    <% } %>
+
+    <div class="filter-bar" style="margin-bottom: var(--space-4);">
+      <a href="/admin/compliance" class="button button-small <%= resolvedFilter === 'all' ? 'active' : '' %>">All</a>
+      <a href="/admin/compliance?resolved=0" class="button button-small <%= resolvedFilter === '0' ? 'active' : '' %>">Active</a>
+      <a href="/admin/compliance?resolved=1" class="button button-small <%= resolvedFilter === '1' ? 'active' : '' %>">Resolved</a>
+    </div>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Type</th><th>Severity</th><th>Reason</th><th>Session</th><th>Resolved</th><th>Date</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <% if (locals.flags && flags.length > 0) { %>
+            <% flags.forEach(function(flag) { %>
+              <tr>
+                <td><span class="status-badge"><%= flag.flag_type %></span></td>
+                <td>
+                  <% if (flag.severity === 'high') { %>
+                    <span style="color: var(--error); font-weight: 600;">High</span>
+                  <% } else if (flag.severity === 'medium') { %>
+                    <span style="color: var(--warning); font-weight: 600;">Medium</span>
+                  <% } else { %>
+                    <span style="color: var(--gray-500);">Low</span>
+                  <% } %>
+                </td>
+                <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= flag.reason || 'N/A' %></td>
+                <td style="font-family: var(--font-mono); font-size: 0.75rem;"><%= flag.session_id ? flag.session_id.substring(0, 16) + '…' : '—' %></td>
+                <td><%= flag.resolved ? 'Yes' : 'No' %></td>
+                <td style="font-size: 0.8125rem; color: var(--gray-500);"><%= new Date(flag.created_at).toLocaleDateString() %></td>
+                <td>
+                  <% if (!flag.resolved) { %>
+                    <form action="/admin/compliance/<%= flag.id %>/resolve" method="POST" style="display: inline;">
+                      <button type="submit" class="button button-small" style="color: var(--accent-green);">Resolve</button>
+                    </form>
+                  <% } else { %>
+                    <span style="color: var(--gray-400); font-size: 0.8125rem;">—</span>
+                  <% } %>
+                </td>
+              </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="7" style="text-align: center; padding: var(--space-8); color: var(--gray-400);">No compliance flags found</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

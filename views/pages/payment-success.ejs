@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+
+<section class="page-content payment-success-page">
+  <div class="container">
+    <% if (typeof processing !== 'undefined' && processing) { %>
+      <div class="success-icon">&#9203;</div>
+      <h1>Payment Processing</h1>
+      <p>Your payment is being processed. You'll receive an email with your download link shortly.</p>
+      <p>If you don't receive an email within 10 minutes, please check your spam folder or <a href="/support">contact support</a>.</p>
+    <% } else if (typeof error !== 'undefined' && error) { %>
+      <div class="error-icon">&#10060;</div>
+      <h1>Payment Verification Needed</h1>
+      <p><%= error %></p>
+      <p>If you believe this is an error, please <a href="/support">contact support</a> with your session details.</p>
+      <a href="/product" class="button button-primary">Return to Product Page</a>
+    <% } else { %>
+      <div class="success-icon">&#9989;</div>
+      <h1>Thank You for Your Purchase!</h1>
+      <p>Your order has been confirmed. You can download your guide using the link below.</p>
+      
+      <% if (typeof downloadToken !== 'undefined' && downloadToken) { %>
+        <div class="download-section">
+          <a href="/download/<%= downloadToken %>" class="button button-primary button-large">
+            Download Your Guide Now
+          </a>
+          <p class="download-note">This link was also sent to your email. It expires in 7 days.</p>
+        </div>
+      <% } %>
+
+      <div class="order-reference">
+        <h3>Order Reference</h3>
+        <p><%= orderId %></p>
+        <p>Keep this for your records. For support, please reference this number.</p>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

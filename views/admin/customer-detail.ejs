@@ -1,0 +1,61 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Customer: <%= customer.email %></h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <div class="detail-card">
+      <h3>Customer Info</h3>
+      <p><strong>ID:</strong> <%= customer.id %></p>
+      <p><strong>Email:</strong> <%= customer.email %></p>
+      <p><strong>Name:</strong> <%= customer.name || '-' %></p>
+      <p><strong>Phone:</strong> <%= customer.phone || '-' %></p>
+      <p><strong>Stripe Customer ID:</strong> <%= customer.stripe_customer_id || '-' %></p>
+      <p><strong>Created:</strong> <%= new Date(customer.created_at).toLocaleString() %></p>
+    </div>
+
+    <div class="admin-section">
+      <h3>Orders (<%= orders.length %>)</h3>
+      <table class="admin-table">
+        <thead><tr><th>ID</th><th>Amount</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% orders.forEach(function(o) { %>
+          <tr>
+            <td><%= o.id.substring(0, 8) %>...</td>
+            <td>$<%= (o.amount_cents / 100).toFixed(2) %></td>
+            <td><span class="status-badge status-<%= o.status %>"><%= o.status %></span></td>
+            <td><%= new Date(o.created_at).toLocaleDateString() %></td>
+            <td><a href="/admin/orders/<%= o.id %>">View</a></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-section">
+      <h3>Download Links (<%= downloadLinks.length %>)</h3>
+      <table class="admin-table">
+        <thead><tr><th>Token</th><th>Downloads</th><th>Expires</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% downloadLinks.forEach(function(dl) { %>
+          <tr>
+            <td><%= dl.token.substring(0, 12) %>...</td>
+            <td><%= dl.download_count %>/<%= dl.max_downloads %></td>
+            <td><%= new Date(dl.expires_at).toLocaleDateString() %></td>
+            <td><%= dl.is_revoked ? 'Revoked' : 'Active' %></td>
+            <td>
+              <form method="POST" action="/admin/download-links/<%= dl.id %>/renew" style="display:inline">
+                <button type="submit" class="button button-small">Renew</button>
+              </form>
+              <form method="POST" action="/admin/download-links/<%= dl.id %>/revoke" style="display:inline">
+                <button type="submit" class="button button-small button-danger">Revoke</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

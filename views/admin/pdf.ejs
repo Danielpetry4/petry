@@ -1,0 +1,33 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Manage PDF Guide</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <% if (typeof success !== 'undefined' && success) { %><div class="alert alert-success">PDF uploaded successfully!</div><% } %>
+    <% if (typeof error !== 'undefined' && error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+    <div class="detail-card">
+      <h3>Current File</h3>
+      <% if (fileInfo) { %>
+      <p><strong>Size:</strong> <%= fileInfo.sizeFormatted %></p>
+      <p><strong>Last Modified:</strong> <%= fileInfo.lastModified.toLocaleString() %></p>
+      <p><strong>Path:</strong> <%= fileInfo.path %></p>
+      <% } else { %>
+      <p>No PDF file uploaded yet.</p>
+      <% } %>
+    </div>
+
+    <div class="admin-section">
+      <h3>Upload New PDF</h3>
+      <form method="POST" action="/admin/pdf/upload" enctype="multipart/form-data" class="admin-form">
+        <div class="form-group">
+          <label for="pdf">Select PDF File (max 50MB)</label>
+          <input type="file" id="pdf" name="pdf" accept=".pdf,application/pdf" required>
+        </div>
+        <button type="submit" class="button button-primary">Upload PDF</button>
+      </form>
+    </div>
+  </div>
+</main>

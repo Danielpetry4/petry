@@ -1,0 +1,112 @@
+<%- include('../partials/header') %>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Take Control of Your Credit</h1>
+      <p class="hero-subtitle">Learn how to review your credit reports, dispute errors, and build better credit habits — all on your own terms.</p>
+      <div class="hero-actions">
+        <a href="/product" class="button button-primary button-large">Get the Guide — $<%= (product.price_cents / 100).toFixed(0) %></a>
+        <a href="#features" class="button button-secondary button-large">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-card">
+        <div class="hero-card-icon">&#128202;</div>
+        <h3>Your Credit, Your Way</h3>
+        <p>No credit repair company needed. Just practical education.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="features">
+  <div class="container">
+    <h2>What You'll Learn</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#128203;</div>
+        <h3>Read Your Credit Reports</h3>
+        <p>Learn to navigate reports from Equifax, Experian, and TransUnion with confidence.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128269;</div>
+        <h3>Identify Possible Errors</h3>
+        <p>Step-by-step checklist to spot inaccuracies in your credit reports.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9998;&#65039;</div>
+        <h3>Dispute Effectively</h3>
+        <p>Sample dispute letters and a complete walkthrough of the dispute process.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128737;&#65039;</div>
+        <h3>Handle Fraud & Identity Theft</h3>
+        <p>Action plans for fraud alerts, credit freezes, and identity recovery.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128176;</div>
+        <h3>Build Better Credit Habits</h3>
+        <p>Proven strategies for improving your credit score over time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128200;</div>
+        <h3>Monitor Your Progress</h3>
+        <p>Track your credit journey with our monitoring templates and checklists.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works">
+  <div class="container">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Purchase the Guide</h3>
+        <p>One-time purchase, instant access to the complete PDF guide.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Follow the Steps</h3>
+        <p>Work through the guide at your own pace with clear, actionable instructions.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Take Action</h3>
+        <p>Use the templates and checklists to review your reports and build better credit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="container">
+    <h2>What Our Readers Say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>"This guide made understanding my credit report so much easier. I found two errors I never would have caught."</p>
+        <cite>— Sarah M.</cite>
+      </div>
+      <div class="testimonial-card">
+        <p>"I was going to hire a credit repair company, but this guide saved me hundreds of dollars. Everything I needed was right here."</p>
+        <cite>— James T.</cite>
+      </div>
+      <div class="testimonial-card">
+        <p>"The dispute process walkthrough was incredibly helpful. I successfully had an incorrect late payment removed."</p>
+        <cite>— Maria R.</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to Take Control?</h2>
+    <p>Get the DIY Credit Repair and Credit Building Guide today.</p>
+    <a href="/product" class="button button-primary button-large">Get the Guide — $<%= (product.price_cents / 100).toFixed(0) %></a>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

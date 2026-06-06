@@ -1,0 +1,73 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Order Details</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <% if (typeof success !== 'undefined' && success) { %><div class="alert alert-success"><%= success %></div><% } %>
+    <% if (typeof error !== 'undefined' && error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+    <div class="detail-card">
+      <h3>Order Info</h3>
+      <p><strong>ID:</strong> <%= order.id %></p>
+      <p><strong>Customer:</strong> <%= order.customer_name || order.customer_email %></p>
+      <p><strong>Product:</strong> <%= order.product_name %></p>
+      <p><strong>Amount:</strong> $<%= (order.amount_cents / 100).toFixed(2) %></p>
+      <p><strong>Status:</strong> <span class="status-badge status-<%= order.status %>"><%= order.status %></span></p>
+      <p><strong>Refund Status:</strong> <%= order.refund_status || 'N/A' %></p>
+      <p><strong>Stripe Session:</strong> <%= order.stripe_session_id ? order.stripe_session_id.substring(0, 20)+'...' : '-' %></p>
+      <p><strong>Created:</strong> <%= new Date(order.created_at).toLocaleString() %></p>
+      <% if (order.refunded_at) { %><p><strong>Refunded:</strong> <%= new Date(order.refunded_at).toLocaleString() %></p><% } %>
+      
+      <% if (order.status !== 'refunded') { %>
+      <form method="POST" action="/admin/orders/<%= order.id %>/refund" onsubmit="return confirm('Refund this order?')">
+        <button type="submit" class="button button-danger">Process Refund</button>
+      </form>
+      <% } %>
+    </div>
+
+    <div class="admin-section">
+      <h3>Download Links</h3>
+      <table class="admin-table">
+        <thead><tr><th>Token</th><th>Downloads</th><th>Expires</th><th>Revoked</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% downloadLinks.forEach(function(dl) { %>
+          <tr>
+            <td><%= dl.token.substring(0, 16) %>...</td>
+            <td><%= dl.download_count %>/<%= dl.max_downloads %></td>
+            <td><%= new Date(dl.expires_at).toLocaleDateString() %></td>
+            <td><%= dl.is_revoked ? 'Yes' : 'No' %></td>
+            <td>
+              <form method="POST" action="/admin/download-links/<%= dl.id %>/renew" style="display:inline">
+                <button type="submit" class="button button-small">Renew</button>
+              </form>
+              <form method="POST" action="/admin/download-links/<%= dl.id %>/revoke" style="display:inline">
+                <button type="submit" class="button button-small button-danger">Revoke</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-section">
+      <h3>Download Events (Last 20)</h3>
+      <table class="admin-table">
+        <thead><tr><th>IP Address</th><th>Success</th><th>Reason</th><th>Date</th></tr></thead>
+        <tbody>
+          <% downloadEvents.forEach(function(de) { %>
+          <tr>
+            <td><%= de.ip_address || '-' %></td>
+            <td><%= de.success ? 'Yes' : 'No' %></td>
+            <td><%= de.reason || '-' %></td>
+            <td><%= new Date(de.created_at).toLocaleString() %></td>
+          </tr>
+          <% }); %>
+          <% if (downloadEvents.length === 0) { %><tr><td colspan="4" class="empty-state">No download events</td></tr><% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

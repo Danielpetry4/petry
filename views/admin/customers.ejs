@@ -1,0 +1,42 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Customers</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <p style="color: var(--gray-500); margin-bottom: var(--space-4);"><%= pagination ? pagination.total : 0 %> total customers</p>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Orders</th><th>Total Spent</th><th>Joined</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <% if (locals.customers && customers.length > 0) { %>
+            <% customers.forEach(function(c) { %>
+              <tr>
+                <td><%= c.name || 'N/A' %></td>
+                <td><%= c.email %></td>
+                <td><%= c.order_count || 0 %></td>
+                <td>$<%= (c.total_spent / 100).toFixed(2) %></td>
+                <td style="font-size: 0.8125rem; color: var(--gray-500);"><%= new Date(c.created_at).toLocaleDateString() %></td>
+                <td><a href="/admin/customers/<%= c.id %>" class="button button-small">View</a></td>
+              </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="6" style="text-align: center; padding: var(--space-8); color: var(--gray-400);">No customers yet</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if (locals.pagination && pagination.pages > 1) { %>
+      <div class="pagination">
+        <% for (let p = 1; p <= pagination.pages; p++) { %>
+          <a href="?page=<%= p %>" class="<%= p === pagination.page ? 'active' : '' %>"><%= p %></a>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</main>

@@ -1,0 +1,32 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Email Logs</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <table class="admin-table">
+      <thead><tr><th>To</th><th>Subject</th><th>Template</th><th>Status</th><th>Sent At</th><th>Error</th></tr></thead>
+      <tbody>
+        <% logs.forEach(function(l) { %>
+        <tr>
+          <td><%= l.to_email %></td>
+          <td><%= l.subject %></td>
+          <td><%= l.template || '-' %></td>
+          <td><span class="status-badge status-<%= l.status %>"><%= l.status %></span></td>
+          <td><%= l.sent_at ? new Date(l.sent_at).toLocaleString() : '-' %></td>
+          <td><%= l.error_message ? l.error_message.substring(0, 40) : '-' %></td>
+        </tr>
+        <% }); %>
+        <% if (logs.length === 0) { %><tr><td colspan="6" class="empty-state">No email logs</td></tr><% } %>
+      </tbody>
+    </table>
+    <% if (pagination.pages > 1) { %>
+    <div class="pagination">
+      <% for (var p = 1; p <= pagination.pages; p++) { %>
+        <a href="/admin/email-logs?page=<%= p %>" class="<%= p === pagination.page ? 'active' : '' %>"><%= p %></a>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+</main>

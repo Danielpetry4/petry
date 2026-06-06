@@ -1,0 +1,33 @@
+<!-- AI Chat Widget -->
+<div class="ai-chat-container" role="region" aria-label="AI Assistant Chat">
+  <div class="ai-chat-header">
+    <div class="ai-chat-avatar assistant" aria-hidden="true">AI</div>
+    <div>
+      <h3>Credit Assistant</h3>
+      <p>Ask questions about credit reports and指南</p>
+    </div>
+  </div>
+
+  <div class="ai-chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+    <div class="ai-chat-message assistant">
+      <div class="ai-chat-avatar assistant">AI</div>
+      <div class="ai-chat-bubble">
+        Hello! I'm here to answer general questions about credit reports, dispute processes, and credit building. How can I help you today?
+      </div>
+    </div>
+  </div>
+
+  <form class="ai-chat-form" action="/api/chat" method="POST">
+    <div class="ai-chat-input">
+      <label for="chat-input" class="sr-only">Type your message</label>
+      <textarea id="chat-input" placeholder="Type your question here..." rows="1" aria-label="Chat message"></textarea>
+      <button type="submit" class="btn btn-primary btn-sm ai-chat-send" aria-label="Send message">
+        Send
+      </button>
+    </div>
+  </form>
+
+  <div class="ai-chat-disclaimer">
+    This AI assistant provides general educational information only. It does not provide legal, financial, or credit repair advice. Responses may not be accurate or complete.
+  </div>
+</div>

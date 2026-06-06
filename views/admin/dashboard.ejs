@@ -1,0 +1,72 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <% if (locals.alert) { %>
+      <div class="alert alert-<%= alert.type || 'info' %>"><%= alert.message %></div>
+    <% } %>
+
+    <div class="stats-grid" style="margin-bottom: var(--space-8);">
+      <div class="stat-card">
+        <div class="stat-card-label">Total Revenue</div>
+        <div class="stat-card-value">$<%= stats ? (stats.totalRevenue / 100).toFixed(2) : '0.00' %></div>
+        <div class="stat-card-change up">All time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">30-Day Revenue</div>
+        <div class="stat-card-value">$<%= stats ? (stats.monthRevenue / 100).toFixed(2) : '0.00' %></div>
+        <div class="stat-card-change up">Last 30 days</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Total Orders</div>
+        <div class="stat-card-value"><%= stats ? stats.totalOrders : 0 %></div>
+        <div class="stat-card-change up"><%= stats ? stats.monthOrders : 0 %> this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Refund Rate</div>
+        <div class="stat-card-value"><%= stats ? stats.refundRate : 0 %>%</div>
+        <div class="stat-card-change <%= stats && parseFloat(stats.refundRate) > 5 ? 'down' : 'up' %>">
+          <%= stats && parseFloat(stats.refundRate) > 5 ? 'Above target' : 'Within target' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: var(--space-8);">
+      <div class="stat-card">
+        <div class="stat-card-label">Pending Support Tickets</div>
+        <div class="stat-card-value"><%= stats ? stats.pendingSupport : 0 %></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Unresolved Compliance Flags</div>
+        <div class="stat-card-value" style="<%= stats && stats.unresolvedFlags > 0 ? 'color: var(--warning);' : '' %>"><%= stats ? stats.unresolvedFlags : 0 %></div>
+      </div>
+    </div>
+
+    <h2 style="font-size: 1.125rem; margin-bottom: var(--space-4);">Recent Orders</h2>
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Customer</th><th>Email</th><th>Amount</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <% if (stats && stats.recentOrders && stats.recentOrders.length > 0) { %>
+            <% stats.recentOrders.forEach(function(order) { %>
+              <tr>
+                <td><%= order.customer_name || 'N/A' %></td>
+                <td><%= order.customer_email || 'N/A' %></td>
+                <td>$<%= (order.amount_cents / 100).toFixed(2) %></td>
+                <td><span class="status-badge <%= order.status %>"><%= order.status %></span></td>
+                <td style="font-size: 0.8125rem; color: var(--gray-500);"><%= new Date(order.created_at).toLocaleDateString() %></td>
+              </tr>
+            <% }); %>
+          <% } else { %>
+            <tr><td colspan="5" style="text-align: center; padding: var(--space-8); color: var(--gray-400);">No orders yet</td></tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

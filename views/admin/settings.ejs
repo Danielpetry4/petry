@@ -1,0 +1,51 @@
+<%- include('sidebar') %>
+<main class="admin-main">
+  <div class="admin-header">
+    <h1>Settings</h1>
+    <div class="admin-user"><span><%= admin.name || admin.email %></span><a href="/admin/logout" class="button button-small">Logout</a></div>
+  </div>
+  <div class="admin-content">
+    <% if (locals.alert) { %>
+      <div class="alert alert-<%= alert.type || 'info' %>"><%= alert.message %></div>
+    <% } %>
+
+    <div class="admin-section">
+      <h2>Product Information</h2>
+      <form method="POST" action="/admin/settings/product" class="admin-form">
+        <div class="form-group">
+          <label for="name">Product Name</label>
+          <input type="text" id="name" name="name" class="form-input" value="<%= product ? product.name : 'DIY Credit Repair and Credit Building Guide' %>" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" class="form-textarea" rows="3" required><%= product ? product.description : '' %></textarea>
+        </div>
+        <button type="submit" class="button button-primary">Update Product Info</button>
+      </form>
+    </div>
+
+    <div class="admin-section">
+      <h2>Pricing</h2>
+      <form method="POST" action="/admin/settings/price">
+        <div class="form-group">
+          <label for="price_cents">Price (in cents)</label>
+          <input type="number" id="price_cents" name="price_cents" class="form-input" style="max-width: 200px;" min="100" max="99999" value="<%= product ? product.price_cents : 2900 %>" required>
+          <p style="font-size: 0.8125rem; color: var(--gray-500); margin-top: var(--space-1);">Current: $<%= product ? (product.price_cents / 100).toFixed(2) : '29.00' %></p>
+        </div>
+        <button type="submit" class="button button-primary">Update Price</button>
+      </form>
+    </div>
+
+    <div class="admin-section">
+      <h2>Current PDF File</h2>
+      <% if (product && product.file_path) { %>
+        <p><strong>File:</strong> <%= product.file_path %></p>
+        <% if (product.file_size) { %>
+          <p><strong>Size:</strong> <%= (product.file_size / (1024 * 1024)).toFixed(2) %> MB</p>
+        <% } %>
+      <% } else { %>
+        <p style="color: var(--gray-500);">No PDF file uploaded yet. <a href="/admin/pdf">Upload one here.</a></p>
+      <% } %>
+    </div>
+  </div>
+</main>
