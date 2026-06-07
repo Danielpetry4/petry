@@ -370,3 +370,142 @@ document.addEventListener('DOMContentLoaded', function () {
     true
   );
 });
+// AI Credit Assistant final override
+(function () {
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function findChatRoot(element) {
+    return (
+      element.closest('.credit-assistant') ||
+      element.closest('.chat-widget') ||
+      element.closest('[class*="chat"]') ||
+      document.querySelector('.credit-assistant') ||
+      document.querySelector('.chat-widget') ||
+      document.body
+    );
+  }
+
+  function findChatInput(root) {
+    return (
+      root.querySelector('textarea') ||
+      root.querySelector('input[type="text"]') ||
+      document.querySelector('textarea[placeholder*="message" i]') ||
+      document.querySelector('input[placeholder*="message" i]') ||
+      document.querySelector('textarea') ||
+      document.querySelector('input[type="text"]')
+    );
+  }
+
+  function findMessageArea(root) {
+    return (
+      root.querySelector('#chat-messages') ||
+      root.querySelector('.chat-messages') ||
+      root.querySelector('.messages') ||
+      root.querySelector('[class*="messages"]') ||
+      root
+    );
+  }
+
+  function appendMessage(container, role, text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = role === 'user' ? 'chat-message user' : 'chat-message assistant';
+    messageDiv.style.margin = '8px 0';
+    messageDiv.style.padding = '8px 10px';
+    messageDiv.style.borderRadius = '8px';
+    messageDiv.style.background = role === 'user' ? '#eef4ff' : '#f5f5f5';
+    messageDiv.style.fontSize = '13px';
+    messageDiv.style.lineHeight = '1.4';
+    messageDiv.innerHTML = escapeHtml(text);
+
+    container.appendChild(messageDiv);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  async function handleChatSend(event) {
+    const clickedButton = event.target.closest('button');
+
+    if (!clickedButton) return;
+
+    const buttonText = (clickedButton.textContent || '').trim().toLowerCase();
+
+    if (buttonText !== 'send') return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const root = findChatRoot(clickedButton);
+    const input = findChatInput(root);
+    const messageArea = findMessageArea(root);
+
+    if (!input) {
+      console.error('AI chat error: input not found');
+      return false;
+    }
+
+    const message = input.value.trim();
+
+    if (!message) return false;
+
+    appendMessage(messageArea, 'user', message);
+    input.value = '';
+    clickedButton.disabled = true;
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: message
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Chat request failed');
+      }
+
+      appendMessage(
+        messageArea,
+        'assistant',
+        data.response || data.message || data.reply || 'Sorry, I could not answer that right now. Please try again.'
+      );
+    } catch (error) {
+      console.error('AI chat error:', error);
+      appendMessage(messageArea, 'assistant', 'Sorry, I could not answer that right now. Please try again.');
+    } finally {
+      clickedButton.disabled = false;
+    }
+
+    return false;
+  }
+
+  document.addEventListener('click', handleChatSend, true);
+
+  document.addEventListener(
+    'submit',
+    function (event) {
+      const form = event.target;
+      const sendButton = form.querySelector('button[type="submit"], button');
+
+      if (sendButton && (sendButton.textContent || '').trim().toLowerCase() === 'send') {
+        handleChatSend({
+          target: sendButton,
+          preventDefault: function () {
+            event.preventDefault();
+          },
+          stopPropagation: function () {
+            event.stopPropagation();
+          }
+        });
+      }
+    },
+    true
+  );
+})();
