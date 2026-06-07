@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 
-<section class="section">
+<section class="legal-content">
   <div class="container-narrow">
     <div class="breadcrumbs">
       <a href="/">Home</a>
@@ -9,85 +9,29 @@
     </div>
 
     <h1>Support</h1>
-    <p class="text-muted" style="margin-bottom: var(--space-8);">Need help with your purchase, download, or have a general question? We're here to help.</p>
+    <p>Need help with your purchase, download link, or the Better Credit Guide? We’re here to help.</p>
 
-    <!-- FAQ Link -->
-    <div class="alert alert-info" style="margin-bottom: var(--space-8);">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 1px;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <div>
-        <strong>Check our FAQ first!</strong> Many common questions are answered there. <a href="/faq">Visit the FAQ page →</a>
-      </div>
-    </div>
+    <h2>Before Contacting Support</h2>
+    <p>Please check the FAQ page first. Many common questions about downloads, refunds, and the guide are answered there.</p>
 
-    <div class="support-layout">
-      <!-- Contact Form -->
-      <div>
-        <h2 style="margin-bottom: var(--space-4);">Send Us a Message</h2>
-        
-        <% if (locals.success) { %>
-          <div class="alert alert-success">Your message has been sent successfully. We'll respond within 1-2 business days.</div>
-        <% } %>
+    <h2>For Purchase or Download Help</h2>
+    <p>If you need help with your order, please include the following information when contacting support:</p>
+    <ul>
+      <li>Your purchase email address;</li>
+      <li>Your order reference number, if available;</li>
+      <li>A brief description of the issue;</li>
+      <li>Whether you are having trouble downloading, opening, or locating the PDF.</li>
+    </ul>
 
-        <% if (locals.error) { %>
-          <div class="alert alert-error"><%= error %></div>
-        <% } %>
+    <h2>Response Time</h2>
+    <p>We typically respond to support requests within 1–2 business days.</p>
 
-        <form class="contact-form" action="/support" method="POST">
-          <div class="form-group">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" id="name" name="name" class="form-input" placeholder="Your name" value="<%= locals.formData && formData.name ? formData.name : '' %>">
-          </div>
+    <h2>AI Assistant</h2>
+    <p>The AI assistant on this website is available for general educational questions about credit reports, dispute processes, fraud alerts/freezes, and the guide. It does not provide legal, financial, credit repair, lending, or professional advice.</p>
 
-          <div class="form-group">
-            <label for="email" class="form-label">Email <span style="color: var(--error);">*</span></label>
-            <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required value="<%= locals.formData && formData.email ? formData.email : '' %>">
-          </div>
-
-          <div class="form-group">
-            <label for="subject" class="form-label">Subject <span style="color: var(--error);">*</span></label>
-            <select id="subject" name="subject" class="form-select" required>
-              <option value="">Select a topic...</option>
-              <option value="purchase" <%= locals.formData && formData.subject === 'purchase' ? 'selected' : '' %>>Purchase Issue</option>
-              <option value="download" <%= locals.formData && formData.subject === 'download' ? 'selected' : '' %>>Download Problem</option>
-              <option value="refund" <%= locals.formData && formData.subject === 'refund' ? 'selected' : '' %>>Refund Request</option>
-              <option value="question" <%= locals.formData && formData.subject === 'question' ? 'selected' : '' %>>General Question</option>
-              <option value="other" <%= locals.formData && formData.subject === 'other' ? 'selected' : '' %>>Other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="message" class="form-label">Message <span style="color: var(--error);">*</span></label>
-            <textarea id="message" name="message" class="form-textarea" placeholder="Describe your issue or question in detail..." required><%= locals.formData && formData.message ? formData.message : '' %></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block">Send Message</button>
-        </form>
-      </div>
-
-      <!-- AI Chat -->
-      <div>
-        <h2 style="margin-bottom: var(--space-4);">AI Assistant</h2>
-        <p class="text-muted" style="margin-bottom: var(--space-4);">Get instant answers to common questions about credit reports, disputes, and the guide.</p>
-        <%- include('../partials/ai-chat') %>
-      </div>
-    </div>
-
-    <!-- Additional Contact Info -->
-    <div style="margin-top: var(--space-12); padding: var(--space-8); background: var(--gray-50); border-radius: var(--border-radius-lg);">
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-6);">
-        <div>
-          <h3 style="font-size: 1rem; margin-bottom: var(--space-2);">Response Time</h3>
-          <p style="font-size: 0.9375rem; margin: 0;">We typically respond to support requests within 1-2 business days.</p>
-        </div>
-        <div>
-          <h3 style="font-size: 1rem; margin-bottom: var(--space-2);">AI Chat Hours</h3>
-          <p style="font-size: 0.9375rem; margin: 0;">Our AI assistant is available 24/7 for general questions about credit and the guide.</p>
-        </div>
-        <div>
-          <h3 style="font-size: 1rem; margin-bottom: var(--space-2);">Refund Requests</h3>
-          <p style="font-size: 0.9375rem; margin: 0;">Please use the contact form with subject "Refund Request" for fastest processing.</p>
-        </div>
-      </div>
-    </div>
+    <h2>Important Reminder</h2>
+    <p>Better Credit Guide is an educational resource only. We are not a credit repair company, law firm, financial advisor, lender, credit bureau, or government agency. We do not guarantee credit score increases, credit report changes, removals, approvals, financing, or any specific outcome.</p>
   </div>
 </section>
+
+<%- include('../partials/footer') %>
