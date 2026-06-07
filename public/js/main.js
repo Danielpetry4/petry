@@ -222,3 +222,151 @@ document.addEventListener('DOMContentLoaded', function () {
     sendButton.addEventListener('click', sendChatMessage);
   }
 });
+// AI Credit Assistant chat - stronger form submit fix
+document.addEventListener('DOMContentLoaded', function () {
+  const chatForm =
+    document.querySelector('form[action="/api/chat"]') ||
+    document.querySelector('form[action*="/api/chat"]') ||
+    document.querySelector('#chat-form') ||
+    document.querySelector('.chat-form') ||
+    document.querySelector('[data-chat-form]') ||
+    document.querySelector('.credit-assistant form') ||
+    document.querySelector('.chat-widget form');
+
+  const chatInput =
+    document.querySelector('.credit-assistant input[type="text"]') ||
+    document.querySelector('.chat-widget input[type="text"]') ||
+    document.querySelector('.credit-assistant textarea') ||
+    document.querySelector('.chat-widget textarea') ||
+    document.querySelector('#chat-input') ||
+    document.querySelector('#chat-message') ||
+    document.querySelector('textarea[name="message"]') ||
+    document.querySelector('input[name="message"]') ||
+    document.querySelector('textarea') ||
+    document.querySelector('input[type="text"]');
+
+  const chatMessages =
+    document.querySelector('.credit-assistant .messages') ||
+    document.querySelector('.chat-widget .messages') ||
+    document.querySelector('#chat-messages') ||
+    document.querySelector('.chat-messages') ||
+    document.querySelector('.credit-assistant-messages') ||
+    document.querySelector('.chat-widget-messages') ||
+    document.querySelector('.chat-messages-container');
+
+  const sendButton =
+    document.querySelector('.credit-assistant button[type="submit"]') ||
+    document.querySelector('.chat-widget button[type="submit"]') ||
+    document.querySelector('#chat-send') ||
+    document.querySelector('.chat-send') ||
+    document.querySelector('.credit-assistant button') ||
+    document.querySelector('.chat-widget button');
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function appendMessage(role, text) {
+    const container =
+      chatMessages ||
+      document.querySelector('.credit-assistant') ||
+      document.querySelector('.chat-widget');
+
+    if (!container) return;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = role === 'user'
+      ? 'chat-message user'
+      : 'chat-message assistant';
+
+    messageDiv.innerHTML = escapeHtml(text);
+    container.appendChild(messageDiv);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  async function sendChatMessage(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    if (!chatInput) {
+      console.error('AI chat error: chat input not found');
+      return false;
+    }
+
+    const userTypedMessage = chatInput.value.trim();
+
+    if (!userTypedMessage) {
+      return false;
+    }
+
+    appendMessage('user', userTypedMessage);
+    chatInput.value = '';
+
+    if (sendButton) {
+      sendButton.disabled = true;
+    }
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: userTypedMessage
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Chat request failed');
+      }
+
+      appendMessage(
+        'assistant',
+        data.response ||
+          data.message ||
+          data.reply ||
+          'Sorry, I could not answer that right now. Please try again.'
+      );
+    } catch (error) {
+      console.error('AI chat error:', error);
+      appendMessage(
+        'assistant',
+        'Sorry, I could not answer that right now. Please try again.'
+      );
+    } finally {
+      if (sendButton) {
+        sendButton.disabled = false;
+      }
+    }
+
+    return false;
+  }
+
+  if (chatForm) {
+    chatForm.addEventListener('submit', sendChatMessage);
+    chatForm.onsubmit = sendChatMessage;
+  }
+
+  if (sendButton) {
+    sendButton.addEventListener('click', sendChatMessage);
+  }
+
+  document.addEventListener(
+    'submit',
+    function (event) {
+      const form = event.target;
+
+      if (form && form.action && form.action.includes('/api/chat')) {
+        sendChatMessage(event);
+      }
+    },
+    true
+  );
+});
