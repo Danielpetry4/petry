@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div class="ai-chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+  <div id="chat-messages" class="ai-chat-messages chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
     <div class="ai-chat-message assistant">
       <div class="ai-chat-avatar assistant">AI</div>
       <div class="ai-chat-bubble">
@@ -17,11 +17,11 @@
     </div>
   </div>
 
-  <form class="ai-chat-form" action="/api/chat" method="POST">
+  <form id="chat-form" class="ai-chat-form" action="/api/chat" method="post">
     <div class="ai-chat-input">
       <label for="chat-input" class="sr-only">Type your message</label>
       <textarea id="chat-input" placeholder="Type your question here..." rows="1" aria-label="Chat message"></textarea>
-      <button type="submit" class="btn btn-primary btn-sm ai-chat-send" aria-label="Send message">
+      <button id="chat-send" type="submit" class="btn btn-primary btn-sm ai-chat-send" aria-label="Send message">
         Send
       </button>
     </div>
