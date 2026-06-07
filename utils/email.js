@@ -87,7 +87,7 @@ async function sendPurchaseConfirmation(customer, order, downloadLink) {
     <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <h1 style="color: #2c3e50;">Thank You for Your Purchase!</h1>
       <p>Hi ${customer.name || 'there'},</p>
-      <p>Thank you for purchasing the <strong>DIY Credit Report &amp; Credit Building Guide</strong>.</p>
+      <p>Thank you for purchasing the <strong>DIY Credit Report & Credit Building Guide</strong>.</p>
       <p>Your order has been confirmed. You can download your guide using the link below:</p>
       <div style="text-align: center; margin: 30px 0;">
         <a href="${downloadUrl}" style="background-color: #27ae60; color: white; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-size: 16px; font-weight: bold;">
@@ -133,7 +133,7 @@ async function sendDownloadLinkRenewal(customer, downloadLink) {
     <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <h2 style="color: #2c3e50;">Your Download Link Has Been Renewed</h2>
       <p>Hi ${customer.name || 'there'},</p>
-      <p>Your download link for the <strong>DIY Credit Report &amp; Credit Building Guide</strong> has been renewed.</p>
+      <p>Your download link for the <strong>DIY Credit Report & Credit Building Guide</strong> has been renewed.</p>
       <div style="text-align: center; margin: 30px 0;">
         <a href="${downloadUrl}" style="background-color: #27ae60; color: white; padding: 14px 28px; text-decoration: none; border-radius: 5px;">
           Download Your Guide
