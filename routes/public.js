@@ -1,3 +1,5 @@
+ublic.js
+
 /**
  * Public routes: landing page, product info, FAQ, support, legal pages.
  */
