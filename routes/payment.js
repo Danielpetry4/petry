@@ -1,5 +1,3 @@
-.js
-
 /**
  * Stripe payment integration routes.
  * Handles Checkout session creation and webhook processing.
