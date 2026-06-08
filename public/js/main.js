@@ -122,86 +122,75 @@ document.addEventListener('DOMContentLoaded', function () {
   if (legalPages.includes(window.location.pathname)) {
     trackEvent('legal_view');
   }
-});
-// AI Credit Assistant clean handler
-document.addEventListener('DOMContentLoaded', function () {
+
+  // AI Chat functionality
   const chatForm = document.getElementById('chat-form');
-  const chatInput = document.getElementById('chat-input');
   const chatMessages = document.getElementById('chat-messages');
-  const chatSend = document.getElementById('chat-send');
+  const chatInput = document.getElementById('chat-input');
+  const chatContainer = document.getElementById('chat-container');
+  const chatBubbleBtn = document.getElementById('chat-bubble-btn');
+  const chatCloseBtn = document.getElementById('chat-close-btn');
 
-  if (!chatForm || !chatInput || !chatMessages || !chatSend) {
-    console.error('AI chat setup failed: missing chat form, input, messages, or send button.');
-    return;
+  // Toggle chat open/close
+  if (chatBubbleBtn && chatContainer) {
+    chatBubbleBtn.addEventListener('click', function () {
+      chatContainer.classList.remove('closed');
+      if (chatInput) chatInput.focus();
+    });
   }
 
-  function escapeHtml(text) {
+  if (chatCloseBtn && chatContainer) {
+    chatCloseBtn.addEventListener('click', function () {
+      chatContainer.classList.add('closed');
+    });
+  }
+
+  if (chatForm && chatMessages && chatInput) {
+    chatForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      // Add user message to chat
+      chatInput.value = '';
+      appendChatMessage('user', message);
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: message })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.message) {
+          appendChatMessage('assistant', data.message);
+        } else {
+          appendChatMessage('assistant', 'Sorry, I could not answer that right now. Please try again.');
+        }
+      } catch (err) {
+        console.error('Chat error:', err);
+        appendChatMessage('assistant', 'Sorry, I could not answer that right now. Please try again.');
+      }
+    });
+  }
+
+  function appendChatMessage(role, text) {
     const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  function appendMessage(role, text) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'ai-chat-message ' + role;
-
-    const avatar = document.createElement('div');
-    avatar.className = 'ai-chat-avatar ' + role;
-    avatar.textContent = role === 'user' ? 'You' : 'AI';
-
-    const bubble = document.createElement('div');
-    bubble.className = 'ai-chat-bubble';
-    bubble.innerHTML = escapeHtml(text);
-
-    wrapper.appendChild(avatar);
-    wrapper.appendChild(bubble);
-    chatMessages.appendChild(wrapper);
+    div.className = 'ai-chat-message';
+    div.innerHTML = '<div class="ai-chat-avatar ' + role + '">' + (role === 'user' ? 'You' : 'AI') + '</div>' +
+      '<div class="ai-chat-bubble">' + escapeHtml(text) + '</div>';
+    chatMessages.appendChild(div);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  async function sendChatMessage(event) {
-    event.preventDefault();
-
-    const message = chatInput.value.trim();
-
-    if (!message) {
-      return;
-    }
-
-    appendMessage('user', message);
-    chatInput.value = '';
-    chatSend.disabled = true;
-    chatSend.textContent = '...';
-
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: message
-        })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Chat request failed');
-      }
-
-      appendMessage(
-        'assistant',
-        data.response || data.message || data.reply || 'Sorry, I could not answer that right now. Please try again.'
-      );
-    } catch (error) {
-      console.error('AI chat error:', error);
-      appendMessage('assistant', 'Sorry, I could not answer that right now. Please try again.');
-    } finally {
-      chatSend.disabled = false;
-      chatSend.textContent = 'Send';
-    }
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
   }
-
-  chatForm.addEventListener('submit', sendChatMessage);
 });
