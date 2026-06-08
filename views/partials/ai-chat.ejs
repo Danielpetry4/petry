@@ -1,33 +1,37 @@
 <!-- AI Chat Widget -->
-<div class="ai-chat-container" role="region" aria-label="AI Assistant Chat">
-  <div class="ai-chat-header">
-    <div class="ai-chat-avatar assistant" aria-hidden="true">AI</div>
-    <div>
-      <h3>Credit Assistant</h3>
-      <p>Ask questions about credit reports and the guide</p>
-    </div>
-  </div>
-
-  <div id="chat-messages" class="ai-chat-messages chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
-    <div class="ai-chat-message assistant">
-      <div class="ai-chat-avatar assistant">AI</div>
-      <div class="ai-chat-bubble">
-        Hello! I'm here to answer general questions about credit reports, dispute processes, and credit building. How can I help you today?
-      </div>
-    </div>
-  </div>
-
-  <form id="chat-form" class="ai-chat-form" action="/api/chat" method="post">
-    <div class="ai-chat-input">
-      <label for="chat-input" class="sr-only">Type your message</label>
-      <textarea id="chat-input" placeholder="Type your question here..." rows="1" aria-label="Chat message"></textarea>
-      <button id="chat-send" type="submit" class="btn btn-primary btn-sm ai-chat-send" aria-label="Send message">
-        Send
-      </button>
-    </div>
-  </form>
-
-  <div class="ai-chat-disclaimer">
-    This AI assistant provides general educational information only. It does not provide legal, financial, or credit repair advice. Responses may not be accurate or complete.
-  </div>
-</div>
+2	<!-- Floating bubble button (always visible) -->
+3	<button id="chat-bubble-btn" class="ai-chat-bubble-btn" aria-label="Open Credit Assistant">
+4	  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+5	</button>
+6	
+7	<!-- Chat window (hidden by default) -->
+8	<div id="chat-container" class="ai-chat-container closed">
+9	  <div class="ai-chat-header">
+10	    <div class="ai-chat-avatar assistant" aria-hidden="true">AI</div>
+11	    <div class="ai-chat-header-text">
+12	      <h3>Credit Assistant</h3>
+13	      <p>Ask questions about credit reports and the guide</p>
+14	    </div>
+15	    <button id="chat-close-btn" class="ai-chat-close-btn" aria-label="Close chat">✕</button>
+16	  </div>
+17	
+18	  <div id="chat-messages" class="ai-chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+19	    <div class="ai-chat-message assistant">
+20	      <div class="ai-chat-avatar assistant">AI</div>
+21	      <div class="ai-chat-bubble">
+22	        Hello! I'm here to answer general questions about credit reports, dispute processes, and credit building. How can I help you today?
+23	      </div>
+24	    </div>
+25	  </div>
+26	
+27	  <form id="chat-form" action="/api/chat" method="POST">
+28	    <div class="ai-chat-input">
+29	      <textarea id="chat-input" placeholder="Type your question here..." rows="1" aria-label="Chat message"></textarea>
+30	      <button id="chat-send" type="submit" class="ai-chat-send" aria-label="Send message">Send</button>
+31	    </div>
+32	  </form>
+33	
+34	  <div class="ai-chat-disclaimer">
+35	    This AI assistant provides general educational information only. It does not provide legal, financial, or credit repair advice. Responses may not be accurate or complete.
+36	  </div>
+37	</div>
