@@ -50,6 +50,7 @@ router.post('/create-checkout-session', async (req, res) => {
         quantity: 1,
       }],
       mode: 'payment',
+      allow_peomotion_codes: true,
       success_url: successUrl,
       cancel_url: cancelUrl,
       customer_email: req.body.customerEmail || undefined,
